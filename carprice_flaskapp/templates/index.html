@@ -61,7 +61,11 @@
 
         <div class='form-input output-container d-flex justify-content-between align-items-center'>
           <button type='submit' class='btn btn-primary predict-btn' type='button'>Predict</button>
-          <p class='output-msg'>You can sell this car at <b>Rs.{{ prediction_text }}</b> lakhs.</p>
+          {% if prediction_text == Null %}
+            <p class='output-msg'></p>
+          {% else %}
+            <p class='output-msg'>You can sell this car at <b>Rs.{{ prediction_text }}</b> lakhs.</p>
+          {% endif %}  
         </div>
         
         </form>

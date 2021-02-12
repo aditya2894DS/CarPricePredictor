@@ -5,7 +5,7 @@ import numpy as np
 app = Flask(__name__)
 
 # importing model
-model_file = open('E:\Programming\Python\DataScience\RealLifeProjects\Projects\CarPricePredictorApp\carprice_predict_mdl', 'rb')
+model_file = open('E:\Programming\Python\DataScience\RealLifeProjects\Projects\CarPricePredictor\carprice_predict_mdl', 'rb')
 model = pickle.load(model_file)
 model_file.close()
 
@@ -54,18 +54,20 @@ def predict_price():
                                Fuel_Type_Petrol,
                                Seller_Type_Individual,
                                Transmission_Manual ]])
-
-    model_output = round(prediction[0], 2)     
-    print('Price: {}, Kms: {}, Car_age: {}, Diesel: {}, petrol: {}, indi: {}, manual: {}'.format(Present_Price,
+    if prediction != None:
+      model_output = round(prediction[0], 2) 
+    else: model_output = None      
+    print('Price: {}, Kms: {}, Car_age: {}, Diesel: {}, petrol: {}, indi: {}, manual: {}, output: {}'.format(Present_Price,
                                Kms_Driven,
                                Car_age,
                                Fuel_Type_Diesel,
                                Fuel_Type_Petrol,
                                Seller_Type_Individual,
-                               Transmission_Manual))
+                               Transmission_Manual,
+                               model_output))
     if model_output < 0:
-      return render_template('index.html', prediction_text= 'Sorry you cannot sell this car.')
-    else: return render_template('index.html', prediction_text= '{}'.format(model_output))
+      return render_template('index.html', prediction_text='Sorry you cannot sell this car.')
+    else: return render_template('index.html', prediction_text='{}'.format(model_output))
   return render_template('index.html')
 
 if __name__ == '__main__':
